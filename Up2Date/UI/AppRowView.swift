@@ -30,7 +30,7 @@ struct AppRowView: View {
 
     private var versionText: String {
         guard let update else {
-            return "Installiert: \(app.installedVersion)"
+            return "Installed: \(app.installedVersion)"
         }
 
         return "\(update.installedVersion) -> \(update.availableVersion)"

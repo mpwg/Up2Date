@@ -9,17 +9,17 @@ struct SparkleSource: UpdateSource {
     }
 
     func scanInstalledApps() async throws -> [AppEntity] {
-        logger.info("Sparkle-Scan angefordert.")
+        logger.info("Sparkle scan requested.")
         _ = fileSystem
         return []
     }
 
     func checkForUpdates(for apps: [AppEntity]) async throws -> [UpdateEntity] {
-        logger.info("Sparkle-Updateprüfung für \(apps.count) Apps angefordert.")
+        logger.info("Sparkle update check requested for \(apps.count) apps.")
         return []
     }
 
     func perform(update: UpdateEntity) async throws {
-        logger.info("Sparkle-Aktualisierung für \(update.appName) angefordert.")
+        logger.info("Sparkle update requested for \(update.appName).")
     }
 }

@@ -9,7 +9,7 @@ struct DashboardView: View {
             content
                 .navigationTitle("Up2Date")
                 .toolbar {
-                    Button("Aktualisieren") {
+                    Button("Refresh") {
                         Task {
                             await viewModel.refresh()
                         }
@@ -27,13 +27,13 @@ struct DashboardView: View {
     @ViewBuilder
     private var content: some View {
         if viewModel.state.isLoading {
-            ProgressView("Apps werden geprüft...")
+            ProgressView("Checking apps...")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if viewModel.state.isEmpty {
             ContentUnavailableView(
-                "Keine Apps gefunden",
+                "No Apps Found",
                 systemImage: "checkmark.circle",
-                description: Text("Es wurden noch keine Apps aus den konfigurierten Quellen gefunden.")
+                description: Text("No apps have been found from the configured sources yet.")
             )
         } else {
             List(viewModel.state.apps) { app in
@@ -59,7 +59,7 @@ private struct PreviewUpdateSource: UpdateSource {
         [
             AppEntity(
                 id: "preview.app",
-                name: "Beispiel-App",
+                name: "Example App",
                 installedVersion: "1.0.0",
                 bundleIdentifier: "com.example.preview",
                 sourceIdentifier: identifier
@@ -72,7 +72,7 @@ private struct PreviewUpdateSource: UpdateSource {
             UpdateEntity(
                 id: "preview.app-1.1.0",
                 appID: "preview.app",
-                appName: "Beispiel-App",
+                appName: "Example App",
                 installedVersion: "1.0.0",
                 availableVersion: "1.1.0",
                 sourceIdentifier: identifier

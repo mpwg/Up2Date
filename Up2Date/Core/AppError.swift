@@ -10,15 +10,15 @@ enum AppError: Error, Equatable, LocalizedError, Sendable {
     var errorDescription: String? {
         switch self {
         case let .sourceUnavailable(source):
-            "Die Aktualisierungsquelle \"\(source)\" ist nicht verfügbar."
+            "The update source \"\(source)\" is unavailable."
         case let .shellCommandFailed(command, exitCode, output):
-            "Der Shell-Befehl \"\(command)\" ist mit Code \(exitCode) fehlgeschlagen: \(output)"
+            "The shell command \"\(command)\" failed with exit code \(exitCode): \(output)"
         case let .fileSystemFailure(message):
-            "Dateisystemfehler: \(message)"
+            "File system error: \(message)"
         case let .updateSourceNotFound(source):
-            "Keine Aktualisierungsquelle für \"\(source)\" gefunden."
+            "No update source found for \"\(source)\"."
         case let .unexpected(message):
-            "Unerwarteter Fehler: \(message)"
+            "Unexpected error: \(message)"
         }
     }
 }

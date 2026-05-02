@@ -13,18 +13,18 @@ struct BrewSource: UpdateSource {
     }
 
     func scanInstalledApps() async throws -> [AppEntity] {
-        logger.info("Homebrew-Scan angefordert.")
+        logger.info("Homebrew scan requested.")
         _ = shell
         _ = fileSystem
         return []
     }
 
     func checkForUpdates(for apps: [AppEntity]) async throws -> [UpdateEntity] {
-        logger.info("Homebrew-Updateprüfung für \(apps.count) Apps angefordert.")
+        logger.info("Homebrew update check requested for \(apps.count) apps.")
         return []
     }
 
     func perform(update: UpdateEntity) async throws {
-        logger.info("Homebrew-Aktualisierung für \(update.appName) angefordert.")
+        logger.info("Homebrew update requested for \(update.appName).")
     }
 }

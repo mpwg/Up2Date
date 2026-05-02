@@ -22,6 +22,6 @@ final class Up2DateUITestsLaunchTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        XCTAssertTrue(app.staticTexts["Keine Apps gefunden"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["No Apps Found"].waitForExistence(timeout: 5))
     }
 }
