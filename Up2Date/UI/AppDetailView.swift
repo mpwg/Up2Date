@@ -14,11 +14,11 @@ struct AppDetailView: View {
         .padding(24)
         .navigationTitle(item.name)
         .toolbar {
-            ToolbarItem(placement: .navigation) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button {
                     close()
                 } label: {
-                    Label("Back", systemImage: "chevron.left")
+                    Text("Done")
                 }
             }
         }

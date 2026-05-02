@@ -1,7 +1,6 @@
 import SwiftUI
 
 enum SidebarItem: String, CaseIterable, Identifiable, Hashable {
-    case overview
     case updates
     case installed
     case history
@@ -11,8 +10,6 @@ enum SidebarItem: String, CaseIterable, Identifiable, Hashable {
 
     var title: String {
         switch self {
-        case .overview:
-            "Overview"
         case .updates:
             "Updates"
         case .installed:
@@ -26,8 +23,6 @@ enum SidebarItem: String, CaseIterable, Identifiable, Hashable {
 
     var systemImage: String {
         switch self {
-        case .overview:
-            "square.grid.2x2"
         case .updates:
             "arrow.down.circle"
         case .installed:

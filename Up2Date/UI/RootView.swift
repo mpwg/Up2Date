@@ -2,8 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @State var viewModel: AppViewModel
-    @State private var selectedSidebarItem: SidebarItem? = .updates
-    @State private var selectedUpdate: UpdateListItem?
+    @State private var selectedSidebarItem: SidebarItem = .updates
     @State private var searchText = ""
     @State private var hasLoaded = false
 
@@ -11,24 +10,16 @@ struct RootView: View {
         NavigationSplitView {
             SidebarView(
                 selection: $selectedSidebarItem,
-                searchText: $searchText,
-                updateCount: AppPresentationData.updates.count
+                searchText: $searchText
             )
             .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 260)
         } detail: {
-            DetailView(
-                selection: selectedSidebarItem ?? .updates,
-                selectedUpdate: $selectedUpdate,
-                updateCount: AppPresentationData.updates.count
-            )
+            DetailView(selection: selectedSidebarItem)
         }
         .task {
             guard !hasLoaded else { return }
             hasLoaded = true
             await viewModel.refresh()
-        }
-        .onChange(of: selectedSidebarItem) {
-            selectedUpdate = nil
         }
     }
 }
