@@ -16,7 +16,7 @@ struct Up2DateApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DashboardView(viewModel: viewModel)
+            RootView(viewModel: viewModel)
         }
     }
 }
