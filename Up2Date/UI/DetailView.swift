@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DetailView: View {
     let selection: SidebarItem
+    let viewModel: AppViewModel
 
     var body: some View {
         Group {
@@ -9,7 +10,7 @@ struct DetailView: View {
             case .updates:
                 UpdatesView()
             case .installed:
-                InstalledView()
+                InstalledView(viewModel: viewModel)
             case .history:
                 HistoryView()
             case .settings:

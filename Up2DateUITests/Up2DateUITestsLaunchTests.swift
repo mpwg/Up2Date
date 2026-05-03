@@ -20,6 +20,7 @@ final class Up2DateUITestsLaunchTests: XCTestCase {
     @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["--uitesting"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["Updates"].waitForExistence(timeout: 5))

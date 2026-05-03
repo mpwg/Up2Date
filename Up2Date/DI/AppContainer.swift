@@ -24,8 +24,8 @@ struct AppContainer: Sendable {
         let shellClient = ProcessShellClient()
         let fileSystemClient = LocalFileSystemClient()
         let sources: [any UpdateSource] = [
-            AppStoreSource(logger: logger),
-            SparkleSource(fileSystem: fileSystemClient, logger: logger),
+            AppStoreSource(fileSystem: fileSystemClient, logger: logger),
+            ManualSource(fileSystem: fileSystemClient, logger: logger),
             BrewSource(shell: shellClient, fileSystem: fileSystemClient, logger: logger)
         ]
 

@@ -21,7 +21,7 @@ struct SettingsView: View {
 
             Section("Sources") {
                 Toggle("App Store", isOn: .constant(true))
-                Toggle("Sparkle", isOn: .constant(true))
+                Toggle("Manuell", isOn: .constant(true))
                 Toggle("Homebrew", isOn: .constant(true))
             }
         }

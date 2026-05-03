@@ -1,3 +1,5 @@
+import Foundation
+
 actor UpdateManager {
     private let sourcesByIdentifier: [String: any UpdateSource]
 
@@ -17,7 +19,9 @@ actor UpdateManager {
             for try await sourceApps in group {
                 apps.append(contentsOf: sourceApps)
             }
-            return apps.sorted { $0.name < $1.name }
+            return deduplicatedApps(apps).sorted {
+                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+            }
         }
     }
 
@@ -55,5 +59,52 @@ actor UpdateManager {
         }
 
         try await source.perform(update: update)
+    }
+
+    private func deduplicatedApps(_ apps: [AppEntity]) -> [AppEntity] {
+        let bundleDeduplicatedApps = preferredAppsByKey(apps) { app in
+            app.bundleIdentifier?.lowercased() ?? normalizedName(app.name)
+        }
+        return preferredAppsByKey(bundleDeduplicatedApps, key: { normalizedName($0.name) })
+    }
+
+    private func preferredAppsByKey(
+        _ apps: [AppEntity],
+        key: (AppEntity) -> String
+    ) -> [AppEntity] {
+        var appsByKey: [String: AppEntity] = [:]
+
+        for app in apps {
+            let key = key(app)
+            guard let existing = appsByKey[key] else {
+                appsByKey[key] = app
+                continue
+            }
+
+            if sourcePriority(app.sourceIdentifier) < sourcePriority(existing.sourceIdentifier) {
+                appsByKey[key] = app
+            }
+        }
+
+        return Array(appsByKey.values)
+    }
+
+    private func normalizedName(_ name: String) -> String {
+        name
+            .lowercased()
+            .replacingOccurrences(of: " ", with: "-")
+    }
+
+    private func sourcePriority(_ sourceIdentifier: String) -> Int {
+        switch sourceIdentifier {
+        case "app-store":
+            0
+        case "homebrew":
+            1
+        case "manual":
+            2
+        default:
+            3
+        }
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
-struct AppStoreSource: UpdateSource {
-    let identifier = "app-store"
+struct ManualSource: UpdateSource {
+    let identifier = "manual"
     private let fileSystem: any FileSystemClient
     private let logger: any Logger
 
@@ -11,11 +11,11 @@ struct AppStoreSource: UpdateSource {
     }
 
     func scanInstalledApps() async throws -> [AppEntity] {
-        logger.info("App Store scan requested.")
+        logger.info("Manual application scan requested.")
         let bundles = try ApplicationBundleScanner(fileSystem: fileSystem).scanApplicationBundles()
 
         return bundles
-            .filter(\.isMacAppStoreApp)
+            .filter { !$0.isMacAppStoreApp }
             .map { bundle in
                 AppEntity(
                     id: appID(for: bundle),
@@ -28,12 +28,12 @@ struct AppStoreSource: UpdateSource {
     }
 
     func checkForUpdates(for apps: [AppEntity]) async throws -> [UpdateEntity] {
-        logger.info("App Store update check requested for \(apps.count) apps.")
+        logger.info("Manual update check requested for \(apps.count) apps.")
         return []
     }
 
     func perform(update: UpdateEntity) async throws {
-        logger.info("App Store update requested for \(update.appName).")
+        logger.info("Manual update requested for \(update.appName).")
     }
 
     private func appID(for bundle: ApplicationBundle) -> String {

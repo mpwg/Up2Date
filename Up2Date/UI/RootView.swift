@@ -14,10 +14,11 @@ struct RootView: View {
             )
             .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 260)
         } detail: {
-            DetailView(selection: selectedSidebarItem)
+            DetailView(selection: selectedSidebarItem, viewModel: viewModel)
         }
         .task {
             guard !hasLoaded else { return }
+            guard !ProcessInfo.processInfo.arguments.contains("--uitesting") else { return }
             hasLoaded = true
             await viewModel.refresh()
         }
